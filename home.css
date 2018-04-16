@@ -1,0 +1,44 @@
+footer{
+    display: table;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 0em;
+    bottom: 1%;
+    position: absolute;
+    font-family: 'Montserrat', sans-serif;
+    display: inline-block;
+}
+
+#content{
+    box-shadow: 10px 10px 5px grey;
+    width: 540px;
+    height: 600px;
+    background-color: #694d0a;
+    border-radius: 10px;
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    margin: auto;
+    display: inline-block;
+    z-index: 2;
+}
+
+#tic-tac-toe-board {
+    display: block;
+    margin: auto;
+    background-color: #779c42;
+    border: 3px solid darkgreen;
+}
+
+.canvas-wrapper {
+    position: absolute;
+    transform: translateY(5%);
+    width: 100%;
+}
+
+.canvas-wrapper-parent {
+    transform-style: preserve-3d;
+}
