@@ -13,8 +13,10 @@ context.translate(0.5, 0.5);
 
 
 var board = getInitialBoard("");
+console.log(board);
 
-drawLines(10, lineColor, context, canvasSize, sectionSize);
+//drawLines(10, lineColor, context, canvasSize, sectionSize);
+    startGame();
 
 canvas.addEventListener('mouseup', function (event) {
     if (player === 1) {
@@ -29,6 +31,11 @@ canvas.addEventListener('mouseup', function (event) {
 });
 
 });
+
+function startGame(){
+    let canvasText = document.getElementById("canvas-text");
+
+}
 
 function getInitialBoard (defaultValue) {
     var board = [];
@@ -71,7 +78,7 @@ function addPlayingPiece (mouse, contekst, sSize, played) {
 }
 
 function clearPlayingArea (xCordinate, yCordinate, contekst, sSize) {
-    contekst.fillStyle = "#fff";
+    contekst.fillStyle = "#779c42";
     contekst.fillRect(
         xCordinate,
         yCordinate,

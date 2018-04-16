@@ -42,3 +42,16 @@ footer{
 .canvas-wrapper-parent {
     transform-style: preserve-3d;
 }
+
+#canvas-text {
+    background-color: transparent;
+    font-family: 'Indie Flower', cursive;
+    position: absolute;
+    margin: auto;
+    display: block;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 6;
+}
