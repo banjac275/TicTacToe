@@ -55,3 +55,51 @@ footer{
     right: 0;
     z-index: 6;
 }
+
+#canvas-text h3 {
+    display: inline-block;
+    font-size: 30px;
+    float: none;
+    width: 80%;
+    margin: auto;
+    padding-top: 25%;
+    padding-left: 20%;
+    -webkit-animation: fadeIn 1s linear;
+    animation: fadeIn 1s linear;
+}
+
+.canvas-text-button {
+    font-family: 'Indie Flower', cursive;
+    font-weight: 800;
+    font-size: 20px;
+    display: inline-block;
+    margin-top: 2%;
+    padding-left: 2%;
+    padding-right: 2%;
+    margin-left: 8%;
+    background-color: transparent;
+    border: none;
+    border-radius: 20px;
+}
+
+.canvas-text-button:hover {
+    border: 3px dashed darkgreen;
+}
+
+.canvas-text-button-wrapper {
+    width: 100%;
+    display: inline;
+    margin: auto;
+    padding-top: 4%;
+    padding-left: 15%;
+}
+
+@keyframes fadeIn {
+
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

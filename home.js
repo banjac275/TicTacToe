@@ -1,4 +1,5 @@
 'use strict';
+var dataObj = null;
 document.addEventListener("DOMContentLoaded", function(event) {
 var player = 1;
 var lineColor = "#ddd";
@@ -34,7 +35,25 @@ canvas.addEventListener('mouseup', function (event) {
 
 function startGame(){
     let canvasText = document.getElementById("canvas-text");
+    let waitFirst = {};
+    canvasText.insertAdjacentHTML('beforeend', '<h3>How do you want to play?</h3>');
+    canvasText.insertAdjacentHTML('beforeend', '<div class="canvas-text-button-wrapper">' +
+        '<button id="onep" class="canvas-text-button">One player</button><button id="twop" ' +
+        'class="canvas-text-button">Two players</button></div>');
 
+    document.getElementById("onep").addEventListener("click", () => {
+        waitFirst.playerCount = 1;
+        console.log(waitFirst);
+        canvasText.classList.add("hidden");
+        canvasText.innerHTML = "";
+        canvasText.classList.remove("hidden");
+        canvasText.classList.add("show");
+        canvasText.insertAdjacentHTML('beforeend', '<h3>Choose sign to play with:</h3>');
+        canvasText.insertAdjacentHTML('beforeend', '<div class="canvas-text-button-wrapper">' +
+            '<button id="iks" class="canvas-text-button">X</button><button id="ox" ' +
+            'class="canvas-text-button">O</button></div>');
+        document.getElementById("iks").style.marginLeft = "24%";
+    });
 }
 
 function getInitialBoard (defaultValue) {
