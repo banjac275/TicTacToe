@@ -44,7 +44,7 @@ footer{
 }
 
 #canvas-text {
-    background-color: transparent;
+    background-color: rgba(0,0,0,0.2);
     font-family: 'Indie Flower', cursive;
     position: absolute;
     margin: auto;
@@ -54,6 +54,8 @@ footer{
     left: 0;
     right: 0;
     z-index: 6;
+    height: 480px;
+    width: 480px;
 }
 
 #canvas-text h3 {

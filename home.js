@@ -1,60 +1,60 @@
 'use strict';
 var dataObj = null;
-var player;
+var player = null;
 var lineColor = "#ddd";
 var canvasSize = 480;
 var sectionSize = canvasSize / 3;
 var board = getInitialBoard("");
-var boardAlt = new Array();
+var boardAlt = [];
+var boardAltPrevPrev = null;
+var contextGlobal = null;
+var playedTemp = null;
+var lineWidth = 10;
+//za kad igra ai
+for (let i = 0; i < 9; i++)
+{
+    boardAlt.push("");
+}
 console.log(board);
 var counter = 0;
 var countAlert = 0;
 var tempCount = 0;
 var choice;
+
 document.addEventListener("DOMContentLoaded", function(event) {
-var canvas = document.getElementById('tic-tac-toe-board');
-var context = canvas.getContext('2d');
-canvas.width = canvasSize;
-canvas.height = canvasSize;
-context.translate(0.5, 0.5);
+    var canvas = document.getElementById('tic-tac-toe-board');
+    var context = canvas.getContext('2d');
+    contextGlobal = context;
+    canvas.width = canvasSize;
+    canvas.height = canvasSize;
+    context.translate(0.5, 0.5);
 
-startGame(context);
+    startGame(context);
 
-canvas.addEventListener('mouseup', function (event) {
-    if(dataObj.playerCount === 2 && counter !== 0 && tempCount !== counter){
-        if (player === "x") {
-            player = "o";
-        } else {
-            player = "x";
-        }
-    }
+    canvas.addEventListener('mouseup', function (event) {
+       if(dataObj.playerCount !== Number(1) && counter !== 0) {
+               if (player === "x") {
+                   player = "o";
+               } else {
+                   player = "x";
+               }
+       } else {
+           player = dataObj.mark;
+       }
 
-    if(counter === 0)
-        player = dataObj.mark;
+       //pre nego da igrac odigra
+       boardAltPrevPrev = boardAlt;
+        tempCount = counter;
+        if(counter !== 9)
+            counter++;
+        console.log(counter);
 
-    if(dataObj.playerCount === 1 && counter === 0)
-        player = dataObj.mark;
+        var canvasMousePosition = getCanvasMousePosition(event, canvas);
+        console.log(canvasMousePosition);
+        addPlayingPiece(canvasMousePosition, context, sectionSize, player);
+        drawLines(lineWidth, lineColor, context, canvasSize, sectionSize);
 
-    tempCount = counter;
-    if(counter !== 9)
-        counter++;
-    console.log(counter);
-
-    var canvasMousePosition = getCanvasMousePosition(event, canvas);
-    console.log(canvasMousePosition);
-    addPlayingPiece(canvasMousePosition, context, sectionSize, player);
-    drawLines(10, lineColor, context, canvasSize, sectionSize);
-
-    //sta radi ai
-    if(dataObj.playerCount === 1){
-        if (player === "x") {
-            player = "o";
-        } else {
-            player = "x";
-        }
-        MakeComputerMove(context, sectionSize, player);
-    }
-});
+    });
 
 });
 
@@ -88,6 +88,7 @@ function startGame(contekst){
         document.getElementById("iks").addEventListener("click", () => {
             waitFirst.mark = "x";
             dataObj = waitFirst;
+            player = "x";
             canvasText.classList.add("hidden");
             canvasText.classList.remove("show");
             canvasText.style.position = "static";
@@ -100,6 +101,7 @@ function startGame(contekst){
         document.getElementById("ox").addEventListener("click", () => {
             waitFirst.mark = "o";
             dataObj = waitFirst;
+            player = "o";
             canvasText.classList.add("hidden");
             canvasText.classList.remove("show");
             canvasText.style.position = "static";
@@ -134,6 +136,7 @@ function startGame(contekst){
         document.getElementById("iks2").addEventListener("click", () => {
             waitFirst.mark = "x";
             dataObj = waitFirst;
+            player = "x";
             canvasText.classList.add("hidden");
             canvasText.classList.remove("show");
             canvasText.style.position = "static";
@@ -146,6 +149,7 @@ function startGame(contekst){
         document.getElementById("ox2").addEventListener("click", () => {
             waitFirst.mark = "o";
             dataObj = waitFirst;
+            player = "o";
             canvasText.classList.add("hidden");
             canvasText.classList.remove("show");
             canvasText.style.position = "static";
@@ -194,6 +198,13 @@ function addPlayingPiece (mouse, contekst, sSize, played) {
                 if(board[y][x] === "") {
                     board[y][x] = played;
                     console.log(board);
+                    if(y === 0)
+                        boardAlt[x] = played;
+                    else if(y === 1)
+                        boardAlt[3+x] = played;
+                    else
+                        boardAlt[6+x] = played;
+                    console.log(boardAlt);
 
                     if (played === "x") {
                         drawX(xCordinate, yCordinate, contekst, sSize);
@@ -220,7 +231,22 @@ function addPlayingPiece (mouse, contekst, sSize, played) {
         }
     }
 
-    //winCheck(board,contekst, sSize);
+    winCheck(boardAlt,contekst, sSize);
+
+    //sta radi ai
+    if(dataObj.playerCount === 1 && counter < 9){
+        if (played === "x") {
+            played = "o";
+        } else {
+            played = "x";
+        }
+
+        if(counter !== 9)
+            counter++;
+
+        playedTemp = played;
+        MakeComputerMove(contekst, sSize, played);
+    }
 }
 
 function clearPlayingArea (xCordinate, yCordinate, contekst, sSize, colorFill) {
@@ -241,14 +267,14 @@ function drawO (xCordinate, yCordinate, contekst, sSize) {
     var endAngle = 2 * Math.PI;
 
     contekst.lineWidth = 10;
-    contekst.strokeStyle = "#01bBC2";
+    contekst.strokeStyle = String("#01bBC2");
     contekst.beginPath();
     contekst.arc(centerX, centerY, radius, startAngle, endAngle);
     contekst.stroke();
 }
 
 function drawX (xCordinate, yCordinate, contekst, sSize) {
-    contekst.strokeStyle = "#f1be32";
+    contekst.strokeStyle = String("#f1be32");
 
     contekst.beginPath();
 
@@ -262,10 +288,12 @@ function drawX (xCordinate, yCordinate, contekst, sSize) {
     contekst.stroke();
 }
 
-function drawLines (lineWidth, strokeStyle, contekst, cSize, sSize) {
+function drawLines (lineWidthh, strokeStyle, contekst, cSize, sSize) {
+    if(lineWidthh === undefined)
+        lineWidthh = lineWidth;
     var lineStart = 4;
     var lineLength = cSize - 5;
-    contekst.lineWidth = Number(lineWidth);
+    contekst.lineWidth = lineWidthh;
     contekst.lineCap = 'round';
     contekst.strokeStyle = strokeStyle;
     contekst.beginPath();
@@ -299,71 +327,9 @@ function getCanvasMousePosition (event, can) {
 }
 
 function winCheck(recBoard, contekst, sSize){
-    let countX = 0;
-    let countO = 0;
-    let positions = [];
 
-    //if(counter > 3) {
-        //row check
-        for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < 3; j++) {
-                if (recBoard[i][j] === "x")
-                    countX++;
-                else if(recBoard[i][j] === "o")
-                    countO++;
-            }
-            if (countX === 3 || countO === 3) {
-                for (let k = 0; k < 3; k++) {
-                    positions.push({x: i, y: k});
-                }
-                positions.push({el: recBoard[i][0]});
-            }
-            countO = 0;
-            countX = 0;
-        }
-
-        //col check
-        if (positions.length === 0) {
-            for (let j = 0; j < 3; j++) {
-                for (let i = 0; i < 3; i++) {
-                    if (recBoard[i][j] === "x")
-                        countX++;
-                    else if(recBoard[i][j] === "o")
-                        countO++;
-                }
-                if (countX === 3 || countO === 3) {
-
-                    for (let k = 0; k < 3; k++) {
-                        positions.push({x: k, y: j});
-                    }
-                    positions.push({el: recBoard[0][j]});
-
-                }
-                countO = 0;
-                countX = 0;
-            }
-        }
-
-        //diagonal check
-        if (positions.length === 0) {
-            if (recBoard[0][0] === "x" && recBoard[1][1] === "x" && recBoard[2][2] === "x") {
-                positions.push({x: 0, y: 0});
-                positions.push({x: 1, y: 1});
-                positions.push({x: 2, y: 2});
-                positions.push({el: recBoard[0][0]});
-            } else if (recBoard[2][0] === "o" && recBoard[1][1] === "o" && recBoard[0][2] === "o") {
-                positions.push({x: 2, y: 0});
-                positions.push({x: 1, y: 1});
-                positions.push({x: 0, y: 2});
-                positions.push({el: recBoard[2][0]});
-            }
-        }
-
-        if (positions.length === 0 && counter === 9) {
-            //alert("There was a tie!");
-            return 1;
-        } else if (positions.length !== 0){
-            for (let i = 0; i < 3; i++) {
+        //if (positions.length !== 0){
+            /*for (let i = 0; i < 3; i++) {
                 let xCordinate = positions[i].y * sSize;
                 let yCordinate = positions[i].x * sSize;
 
@@ -374,21 +340,60 @@ function winCheck(recBoard, contekst, sSize){
                 } else {
                     drawO(xCordinate, yCordinate, contekst, sSize);
                 }
-            }
+            }*/
 
             //alert("The winner is " + positions[3].el);
-            if(positions[3].el === "x") {
+            /*if(positions[3].el === "x") {
                 return 2;
             } else {
                 return 3;
             }
         } else {
             return 0;
-        }
-    //}
+        }*/
+
+    for (let i = 0; i <= 6; i += 3)
+    {
+        if (recBoard[i] === "x" && recBoard[i + 1] === "x" && recBoard[i + 2] === "x")
+            return 2;
+        if (recBoard[i] === "o" && recBoard[i + 1] === "o" && recBoard[i + 2] === "o")
+            return 3;
+    }
+
+    // Check for vertical wins
+    for (let i = 0; i <= 2; i++)
+    {
+        if (recBoard[i] === "x" && recBoard[i + 3] === "x" && recBoard[i + 6] === "x")
+            return 2;
+        if (recBoard[i] === "o" && recBoard[i + 3] === "o" && recBoard[i + 6] === "o")
+            return 3;
+    }
+
+    // Check for diagonal wins
+    if ((recBoard[0] === "x" && recBoard[4] === "x" && recBoard[8] === "x") ||
+        (recBoard[2] === "x" && recBoard[4] === "x" && recBoard[6] === "x"))
+        return 2;
+
+    if ((recBoard[0] === "o" && recBoard[4] === "o" && recBoard[8] === "o") ||
+        (recBoard[2] === "o" && recBoard[4] === "o" && recBoard[6] === "o"))
+        return 3;
+
+    // Check for tie
+    for (let i = 0; i < 9; i++)
+    {
+        if (recBoard[i] !== "x" && recBoard[i] !== "o")
+            return 0;
+    }
+    return 1;
 }
 
-function minimax(tempBoardGame, depth, contekst, sSize) {
+function minimax(tempBoardGame, depth, contekst, sSize, played) {
+    if(contekst === undefined)
+        contekst = contextGlobal;
+    if(sSize === undefined)
+        sSize = sectionSize;
+    if(played === undefined)
+        played = playedTemp;
     if (winCheck(tempBoardGame, contekst, sSize) !== 0)
         return score(tempBoardGame, depth, contekst, sSize);
 
@@ -396,6 +401,7 @@ function minimax(tempBoardGame, depth, contekst, sSize) {
     var scores = new Array();
     var moves = new Array();
     var availableMoves = GetAvailableMoves(tempBoardGame);
+    //console.log(availableMoves);
     var move, possible_game;
     for(var i=0; i < availableMoves.length; i++) {
         move = availableMoves[i];
@@ -407,7 +413,7 @@ function minimax(tempBoardGame, depth, contekst, sSize) {
 
     var max_score, max_score_index, min_score,
         min_score_index;
-    if (active_turn === "COMPUTER") {
+    if (played === "x") {
         max_score = Math.max.apply(Math, scores);
         max_score_index = scores.indexOf(max_score);
         choice = moves[max_score_index];
@@ -423,16 +429,90 @@ function minimax(tempBoardGame, depth, contekst, sSize) {
 
 function MakeComputerMove(contekst, sSize, played)
 {
-    var start, end, time;
-    start = new Date().getTime() / 1000;
-    minimax(board, 0);
-    end = new Date().getTime() / 1000;
-    time = end - start;
-    ShowTimes(time);
+    if(contekst === undefined)
+        contekst = contextGlobal;
+    if(sSize === undefined)
+        sSize = sectionSize;
+    if(played === undefined)
+        played = playedTemp;
+    var positions = [];
+    let boardAltPrev = boardAlt;
+    minimax(boardAlt, 0);
+    console.log(boardAlt);
     var move = choice;
-    board[move] = played;
-    document.images[move].src = computerImage.src;
+    boardAlt[move] = played;
+    for(let j = 0; j<boardAlt.length; j++){
+        if(boardAltPrev[j] !== "" && boardAltPrev[j] !== boardAlt[j]){
+            boardAlt = boardAltPrevPrev;
+            counter--;
+        }
+    }
     choice = [];
+    for(let i = 0; i < boardAlt.length; i++){
+
+        switch (i) {
+            case 0:
+                positions.push({x: 0, y: 0, el: boardAlt[i]});
+                //board[positions[i].x][positions[i].y] = positions[i].el;
+                break;
+            case 1:
+                positions.push({x: 0, y: 1, el: boardAlt[i]});
+                //board[positions[i].x][positions[i].y] = positions[i].el;
+                break;
+            case 2:
+                positions.push({x: 0, y: 2, el: boardAlt[i]});
+                //board[positions[i].x][positions[i].y] = positions[i].el;
+                break;
+            case 3:
+                positions.push({x: 1, y: 0, el: boardAlt[i]});
+                //board[positions[i].x][positions[i].y] = positions[i].el;
+                break;
+            case 4:
+                positions.push({x: 1, y: 1, el: boardAlt[i]});
+                //board[positions[i].x][positions[i].y] = positions[i].el;
+                break;
+            case 5:
+                positions.push({x: 1, y: 2, el: boardAlt[i]});
+                //board[positions[i].x][positions[i].y] = positions[i].el;
+                break;
+            case 6:
+                positions.push({x: 2, y: 0, el: boardAlt[i]});
+                //board[positions[i].x][positions[i].y] = positions[i].el;
+                break;
+            case 7:
+                positions.push({x: 2, y: 1, el: boardAlt[i]});
+                //board[positions[i].x][positions[i].y] = positions[i].el;
+                break;
+            case 8:
+                positions.push({x: 2, y: 2, el: boardAlt[i]});
+                //board[positions[i].x][positions[i].y] = positions[i].el;
+                break;
+        }
+
+    }
+
+    if (positions.length !== 0) {
+
+        console.log(positions);
+        console.log(board);
+
+        for(let i = 0; i<positions.length; i++) {
+            let xCordinate = positions[i].y * sSize;
+            let yCordinate = positions[i].x * sSize;
+
+            clearPlayingArea(xCordinate, yCordinate, contekst, sSize, "#779c42");
+
+            if (positions[i].el === "x") {
+                drawX(xCordinate, yCordinate, contekst, sSize);
+            } else if(positions[i].el === "o") {
+                drawO(xCordinate, yCordinate, contekst, sSize);
+            } else {
+                clearPlayingArea(xCordinate, yCordinate, contekst, sSize, "#779c42");
+            }
+        }
+    }
+
+    winCheck(boardAlt,contekst, sSize);
 }
 
 function score(game, depth, contekst, sSize) {
@@ -453,3 +533,23 @@ function GetAvailableMoves(game) {
     return possibleMoves;
 }
 
+function GetNewState(move, game) {
+    var piece = dataObj.mark;
+    game[move] = piece;
+    return game;
+}
+
+function UndoMove(game, move) {
+    game[move] = "";
+    ChangeTurn();
+    return game;
+}
+
+function ChangeTurn(played) {
+    if (played === "x") {
+        played = "o";
+    } else {
+        played = "x";
+    }
+    return played;
+}
