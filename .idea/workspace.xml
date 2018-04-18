@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f8f3cd62-b496-4893-96f4-fa3604341171" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/home.css" afterPath="$PROJECT_DIR$/home.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/home.js" afterPath="$PROJECT_DIR$/home.js" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -51,8 +50,8 @@
       <file leaf-file-name="home.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/home.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="629">
-              <caret line="482" column="42" lean-forward="false" selection-start-line="482" selection-start-column="42" selection-end-line="482" selection-end-column="42" />
+            <state relative-caret-position="461">
+              <caret line="223" column="39" lean-forward="false" selection-start-line="223" selection-start-column="39" selection-end-line="223" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -245,7 +244,7 @@
       <workItem from="1523992571185" duration="4266000" />
       <workItem from="1523996883591" duration="3453000" />
       <workItem from="1524000651289" duration="1331000" />
-      <workItem from="1524052500040" duration="10954000" />
+      <workItem from="1524052500040" duration="12389000" />
     </task>
     <task id="LOCAL-00001" summary="neki poslovi">
       <created>1523908824019</created>
@@ -268,11 +267,18 @@
       <option name="project" value="LOCAL" />
       <updated>1523985416655</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="radi lepo min max sto sam nasao, radi i igrac protic igraca, samo trebam back da podesim i da mi osvetli sve kad neko pobedi i da prikazuje rez i ostalo ali veci bitniji deo posla je zavrsen :3">
+      <created>1524064565867</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1524064565867</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="54676000" />
+    <option name="totallyTimeSpent" value="56111000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -316,7 +322,8 @@
     <MESSAGE value="neki poslovi" />
     <MESSAGE value="ubacena dugmad,treba jos back da se ubaci da bi moglo ponovo da se bira da li ce jedan ili dva igraca" />
     <MESSAGE value="vece izmene" />
-    <option name="LAST_COMMIT_MESSAGE" value="vece izmene" />
+    <MESSAGE value="radi lepo min max sto sam nasao, radi i igrac protic igraca, samo trebam back da podesim i da mi osvetli sve kad neko pobedi i da prikazuje rez i ostalo ali veci bitniji deo posla je zavrsen :3" />
+    <option name="LAST_COMMIT_MESSAGE" value="radi lepo min max sto sam nasao, radi i igrac protic igraca, samo trebam back da podesim i da mi osvetli sve kad neko pobedi i da prikazuje rez i ostalo ali veci bitniji deo posla je zavrsen :3" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -511,8 +518,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/home.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="482" column="42" lean-forward="false" selection-start-line="482" selection-start-column="42" selection-end-line="482" selection-end-column="42" />
+        <state relative-caret-position="461">
+          <caret line="223" column="39" lean-forward="false" selection-start-line="223" selection-start-column="39" selection-end-line="223" selection-end-column="39" />
           <folding />
         </state>
       </provider>

@@ -10,6 +10,7 @@ var boardAltPrevPrev = null;
 var contextGlobal = null;
 var playedTemp = null;
 var lineWidth = 10;
+var posSaved = null;
 //za kad igra ai
 for (let i = 0; i < 9; i++)
 {
@@ -198,19 +199,37 @@ function addPlayingPiece (mouse, contekst, sSize, played) {
                 if(board[y][x] === "") {
                     board[y][x] = played;
                     console.log(board);
-                    if(y === 0)
-                        boardAlt[x] = played;
-                    else if(y === 1)
-                        boardAlt[3+x] = played;
-                    else
-                        boardAlt[6+x] = played;
-                    console.log(boardAlt);
-
-                    if (played === "x") {
-                        drawX(xCordinate, yCordinate, contekst, sSize);
-                    } else {
-                        drawO(xCordinate, yCordinate, contekst, sSize);
+                    if(y === 0) {
+                        if(board[y][x] !== boardAlt[x] && boardAlt[x] === ""){
+                            boardAlt[x] = played;
+                            if (played === "x") {
+                                drawX(xCordinate, yCordinate, contekst, sSize);
+                            } else {
+                                drawO(xCordinate, yCordinate, contekst, sSize);
+                            }
+                        }
                     }
+                    else if(y === 1) {
+                        if(board[y][x] !== boardAlt[3+x] && boardAlt[3+x] === ""){
+                            boardAlt[3+x] = played;
+                            if (played === "x") {
+                                drawX(xCordinate, yCordinate, contekst, sSize);
+                            } else {
+                                drawO(xCordinate, yCordinate, contekst, sSize);
+                            }
+                        }
+                    }
+                    else {
+                        if(board[y][x] !== boardAlt[6+x] && boardAlt[6+x] === ""){
+                            boardAlt[6+x] = played;
+                            if (played === "x") {
+                                drawX(xCordinate, yCordinate, contekst, sSize);
+                            } else {
+                                drawO(xCordinate, yCordinate, contekst, sSize);
+                            }
+                        }
+                    }
+                    console.log(boardAlt);
 
                     /*if(counter === 9){
                         winCheck(board,contekst, sSize);
@@ -494,6 +513,7 @@ function MakeComputerMove(contekst, sSize, played)
     if (positions.length !== 0) {
 
         console.log(positions);
+        posSaved = positions;
         console.log(board);
 
         for(let i = 0; i<positions.length; i++) {
