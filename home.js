@@ -11,6 +11,7 @@ var contextGlobal = null;
 var playedTemp = null;
 var lineWidth = 10;
 var posSaved = null;
+var tableCount = 0;
 //za kad igra ai
 for (let i = 0; i < 9; i++)
 {
@@ -63,6 +64,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 function startGame(contekst){
     let canvasText = document.getElementById("canvas-text");
     let waitFirst = {};
+    let scoreText = document.getElementById("score-wrapper");
     if(canvasText.classList.hasOwnProperty("hidden"))
         canvasText.classList.remove("hidden");
 
@@ -97,6 +99,9 @@ function startGame(contekst){
             canvasText.innerHTML = "";
             console.log(waitFirst);
             drawLines(10, lineColor, contekst, canvasSize, sectionSize);
+            scoreText.classList.remove("hidden");
+            scoreText.insertAdjacentHTML('beforeend', '<table class="table"><thead><tr>' +
+                '<th>#</th><th>Human - X</th><th>AI - O</th></tr></thead><tbody id="tablebody"></tbody></table>');
         });
 
         document.getElementById("ox").addEventListener("click", () => {
@@ -110,11 +115,14 @@ function startGame(contekst){
             canvasText.innerHTML = "";
             console.log(waitFirst);
             drawLines(10, lineColor, contekst, canvasSize, sectionSize);
+            scoreText.classList.remove("hidden");
+            scoreText.insertAdjacentHTML('beforeend', '<table class="table"><thead><tr>' +
+                '<th>#</th><th>Human - O</th><th>AI - X</th></tr></thead><tbody id="tablebody"></tbody></table>');
         });
 
         document.getElementById("backit").addEventListener("click", () => {
             canvasText.innerHTML = "";
-            startGame();
+            startGame(contekst);
         });
 
     });
@@ -145,6 +153,9 @@ function startGame(contekst){
             canvasText.innerHTML = "";
             console.log(waitFirst);
             drawLines(10, lineColor, contekst, canvasSize, sectionSize);
+            scoreText.classList.remove("hidden");
+            scoreText.insertAdjacentHTML('beforeend', '<table class="table"><thead><tr>' +
+                '<th>#</th><th>Player 1 - X</th><th>Player 2 - O</th></tr></thead><tbody id="tablebody"></tbody></table>');
         });
 
         document.getElementById("ox2").addEventListener("click", () => {
@@ -158,11 +169,14 @@ function startGame(contekst){
             canvasText.innerHTML = "";
             console.log(waitFirst);
             drawLines(10, lineColor, contekst, canvasSize, sectionSize);
+            scoreText.classList.remove("hidden");
+            scoreText.insertAdjacentHTML('beforeend', '<table class="table"><thead><tr>' +
+                '<th>#</th><th>Player 1 - O</th><th>Player 2 - X</th></tr></thead><tbody id="tablebody"></tbody></table>');
         });
 
         document.getElementById("backit2").addEventListener("click", () => {
             canvasText.innerHTML = "";
-            startGame();
+            startGame(contekst);
         });
 
     });
@@ -250,7 +264,9 @@ function addPlayingPiece (mouse, contekst, sSize, played) {
         }
     }
 
-    winCheck(boardAlt,contekst, sSize);
+    let retWin = winCheck(boardAlt,contekst, sSize);
+
+    markWin(retWin);
 
     //sta radi ai
     if(dataObj.playerCount === 1 && counter < 9){
@@ -346,31 +362,6 @@ function getCanvasMousePosition (event, can) {
 }
 
 function winCheck(recBoard, contekst, sSize){
-
-        //if (positions.length !== 0){
-            /*for (let i = 0; i < 3; i++) {
-                let xCordinate = positions[i].y * sSize;
-                let yCordinate = positions[i].x * sSize;
-
-                clearPlayingArea(xCordinate, yCordinate, contekst, sSize, "#dd7373");
-
-                if (positions[3].el === "x") {
-                    drawX(xCordinate, yCordinate, contekst, sSize);
-                } else {
-                    drawO(xCordinate, yCordinate, contekst, sSize);
-                }
-            }*/
-
-            //alert("The winner is " + positions[3].el);
-            /*if(positions[3].el === "x") {
-                return 2;
-            } else {
-                return 3;
-            }
-        } else {
-            return 0;
-        }*/
-
     for (let i = 0; i <= 6; i += 3)
     {
         if (recBoard[i] === "x" && recBoard[i + 1] === "x" && recBoard[i + 2] === "x")
@@ -572,4 +563,147 @@ function ChangeTurn(played) {
         played = "x";
     }
     return played;
+}
+
+function markWin(winNum) {
+    for(let i = 0; i < boardAlt.length; i++){
+
+        switch (i) {
+            case 0:
+                board[0][0] = boardAlt[i];
+                break;
+            case 1:
+                board[0][1] = boardAlt[i];
+                break;
+            case 2:
+                board[0][2] = boardAlt[i];
+                break;
+            case 3:
+                board[1][0] = boardAlt[i];
+                break;
+            case 4:
+                board[1][1] = boardAlt[i];
+                break;
+            case 5:
+                board[1][2] = boardAlt[i];
+                break;
+            case 6:
+                board[2][0] = boardAlt[i];
+                break;
+            case 7:
+                board[2][1] = boardAlt[i];
+                break;
+            case 8:
+                board[2][2] = boardAlt[i];
+                break;
+        }
+
+    }
+    console.log(board);
+
+    if(winNum === 1 || winNum === 2 || winNum === 3){
+        if(winNum === 1){
+            alert("It is a tie!");
+            tableCount++;
+            document.getElementById("tablebody").insertAdjacentHTML('beforeend', '<tr><td>'+tableCount+'</td>' +
+                '<td>0</td><td>0</td></tr>');
+        }
+        if(winNum === 2 || winNum === 3){
+            let countX = 0;
+            let countO = 0;
+            let positions = [];
+
+            //row check
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    if (board[i][j] === "x")
+                        countX++;
+                    else if(board[i][j] === "o")
+                        countO++;
+                }
+                if (countX === 3 || countO === 3) {
+                    for (let k = 0; k < 3; k++) {
+                        positions.push({x: k, y: i});
+                    }
+                    positions.push({el: board[i][0]});
+                }
+                countO = 0;
+                countX = 0;
+            }
+
+            //col check
+            if (positions.length === 0) {
+                for (let j = 0; j < 3; j++) {
+                    for (let i = 0; i < 3; i++) {
+                        if (board[i][j] === "x")
+                            countX++;
+                        else if(board[i][j] === "o")
+                            countO++;
+                    }
+                    if (countX === 3 || countO === 3) {
+
+                        for (let k = 0; k < 3; k++) {
+                            positions.push({x: j, y: k});
+                        }
+                        positions.push({el: board[j][0]});
+
+                    }
+                    countO = 0;
+                    countX = 0;
+                }
+            }
+
+            //diagonal check
+            if (positions.length === 0 && winNum === 2) {
+                if (board[0][0] === "x" && board[1][1] === "x" && board[2][2] === "x") {
+                    positions.push({x: 0, y: 0});
+                    positions.push({x: 1, y: 1});
+                    positions.push({x: 2, y: 2});
+                    positions.push({el: board[0][0]});
+                } else if (board[2][0] === "x" && board[1][1] === "x" && board[0][2] === "x") {
+                    positions.push({x: 2, y: 0});
+                    positions.push({x: 1, y: 1});
+                    positions.push({x: 0, y: 2});
+                    positions.push({el: board[2][0]});
+                }
+            } else if(positions.length === 0 && winNum === 3){
+                if (board[0][0] === "o" && board[1][1] === "o" && board[2][2] === "o") {
+                    positions.push({x: 0, y: 0});
+                    positions.push({x: 1, y: 1});
+                    positions.push({x: 2, y: 2});
+                    positions.push({el: board[0][0]});
+                } else if (board[2][0] === "o" && board[1][1] === "o" && board[0][2] === "o") {
+                    positions.push({x: 2, y: 0});
+                    positions.push({x: 1, y: 1});
+                    positions.push({x: 0, y: 2});
+                    positions.push({el: board[2][0]});
+                }
+            }
+
+            if (positions.length !== 0){
+                for (let i = 0; i < 3; i++) {
+                    let xCordinate = positions[i].x * sectionSize;
+                    let yCordinate = positions[i].y * sectionSize;
+
+                    clearPlayingArea(xCordinate, yCordinate, contextGlobal, sectionSize, "#dd7373");
+
+                    if (positions[3].el === "x") {
+                        drawX(xCordinate, yCordinate, contextGlobal, sectionSize);
+                        tableCount++;
+                        document.getElementById("tablebody").insertAdjacentHTML('beforeend', '<tr><td>'+tableCount+'</td>' +
+                            '<td>1</td><td>0</td></tr>');
+                    } else {
+                        drawO(xCordinate, yCordinate, contextGlobal, sectionSize);
+                        tableCount++;
+                        document.getElementById("tablebody").insertAdjacentHTML('beforeend', '<tr><td>'+tableCount+'</td>' +
+                            '<td>0</td><td>1</td></tr>');
+                    }
+                }
+
+
+            }
+
+        }
+
+    }
 }
