@@ -58,11 +58,23 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     });
 
+    document.getElementById("pressRestart").addEventListener("click", () => {
+        document.getElementById("canvas-text").innerHTML = "";
+        counter = 0;
+        clearPlayingArea(0, 0, contextGlobal, canvasSize, "#779c42");
+        document.getElementById("score-wrapper").classList.add("hidden");
+        document.getElementById("score-wrapper").innerHTML = "";
+        document.getElementById("canvas-text").style.position = "absolute";
+        document.getElementById("canvas-text").style.display = "block";
+        startGame(context);
+    });
+
 });
 
 //pocetak igre i pocetni ekran
 function startGame(contekst){
     let canvasText = document.getElementById("canvas-text");
+    let infodiv = document.getElementById("score-wrapper-info");
     let waitFirst = {};
     let scoreText = document.getElementById("score-wrapper");
     if(canvasText.classList.hasOwnProperty("hidden"))
@@ -102,6 +114,11 @@ function startGame(contekst){
             scoreText.classList.remove("hidden");
             scoreText.insertAdjacentHTML('beforeend', '<table class="table"><thead><tr>' +
                 '<th>#</th><th>Human - X</th><th>AI - O</th></tr></thead><tbody id="tablebody"></tbody></table>');
+
+            if(infodiv.classList.hasOwnProperty("hidden"))
+                infodiv.classList.remove("hidden");
+
+            infodiv.style.display = "inline-block";
         });
 
         document.getElementById("ox").addEventListener("click", () => {
@@ -118,6 +135,11 @@ function startGame(contekst){
             scoreText.classList.remove("hidden");
             scoreText.insertAdjacentHTML('beforeend', '<table class="table"><thead><tr>' +
                 '<th>#</th><th>Human - O</th><th>AI - X</th></tr></thead><tbody id="tablebody"></tbody></table>');
+
+            if(infodiv.classList.hasOwnProperty("hidden"))
+                infodiv.classList.remove("hidden");
+
+            infodiv.style.display = "block";
         });
 
         document.getElementById("backit").addEventListener("click", () => {
@@ -156,6 +178,11 @@ function startGame(contekst){
             scoreText.classList.remove("hidden");
             scoreText.insertAdjacentHTML('beforeend', '<table class="table"><thead><tr>' +
                 '<th>#</th><th>Player 1 - X</th><th>Player 2 - O</th></tr></thead><tbody id="tablebody"></tbody></table>');
+
+            if(infodiv.classList.hasOwnProperty("hidden"))
+                infodiv.classList.remove("hidden");
+
+            infodiv.style.display = "inline-block";
         });
 
         document.getElementById("ox2").addEventListener("click", () => {
@@ -172,6 +199,11 @@ function startGame(contekst){
             scoreText.classList.remove("hidden");
             scoreText.insertAdjacentHTML('beforeend', '<table class="table"><thead><tr>' +
                 '<th>#</th><th>Player 1 - O</th><th>Player 2 - X</th></tr></thead><tbody id="tablebody"></tbody></table>');
+
+            if(infodiv.classList.hasOwnProperty("hidden"))
+                infodiv.classList.remove("hidden");
+
+            infodiv.style.display = "inline-block";
         });
 
         document.getElementById("backit2").addEventListener("click", () => {
@@ -269,7 +301,7 @@ function addPlayingPiece (mouse, contekst, sSize, played) {
     markWin(retWin);
 
     //sta radi ai
-    if(dataObj.playerCount === 1 && counter < 9){
+    if(dataObj.playerCount === 1 && counter < 9 && retWin === 0){
         if (played === "x") {
             played = "o";
         } else {
@@ -523,7 +555,9 @@ function MakeComputerMove(contekst, sSize, played)
         }
     }
 
-    winCheck(boardAlt,contekst, sSize);
+    let retWin = winCheck(boardAlt,contekst, sSize);
+
+    markWin(retWin);
 }
 
 function score(game, depth, contekst, sSize) {
@@ -603,10 +637,36 @@ function markWin(winNum) {
 
     if(winNum === 1 || winNum === 2 || winNum === 3){
         if(winNum === 1){
-            alert("It is a tie!");
+            //alert("It is a tie!");
             tableCount++;
             document.getElementById("tablebody").insertAdjacentHTML('beforeend', '<tr><td>'+tableCount+'</td>' +
                 '<td>0</td><td>0</td></tr>');
+
+            let canvasText = document.getElementById("canvas-text");
+            if(canvasText.classList.hasOwnProperty("hidden"))
+                canvasText.classList.remove("hidden");
+
+            canvasText.style.position = "absolute";
+            canvasText.style.display = "block";
+
+            canvasText.insertAdjacentHTML('beforeend', '<h3>It is a tie!</h3>');
+
+            board = getInitialBoard("");
+            boardAlt = [];
+            for (let i = 0; i < 9; i++)
+            {
+                boardAlt.push("");
+            }
+
+            setTimeout(() =>{
+                canvasText.classList.add("hidden");
+                canvasText.style.position = "static";
+                canvasText.style.display = "none";
+                canvasText.innerHTML = "";
+                counter = 0;
+                clearPlayingArea(0, 0, contextGlobal, canvasSize, "#779c42");
+                drawLines(lineWidth, lineColor, contextGlobal, canvasSize, sectionSize);
+            }, 1500);
         }
         if(winNum === 2 || winNum === 3){
             let countX = 0;
@@ -689,17 +749,72 @@ function markWin(winNum) {
 
                     if (positions[3].el === "x") {
                         drawX(xCordinate, yCordinate, contextGlobal, sectionSize);
-                        tableCount++;
-                        document.getElementById("tablebody").insertAdjacentHTML('beforeend', '<tr><td>'+tableCount+'</td>' +
-                            '<td>1</td><td>0</td></tr>');
                     } else {
                         drawO(xCordinate, yCordinate, contextGlobal, sectionSize);
-                        tableCount++;
-                        document.getElementById("tablebody").insertAdjacentHTML('beforeend', '<tr><td>'+tableCount+'</td>' +
-                            '<td>0</td><td>1</td></tr>');
                     }
                 }
 
+                let canvasText = document.getElementById("canvas-text");
+
+                if (positions[3].el === "x") {
+                    tableCount++;
+                    document.getElementById("tablebody").insertAdjacentHTML('beforeend', '<tr><td>'+tableCount+'</td>' +
+                        '<td>1</td><td>0</td></tr>');
+
+                    if(canvasText.classList.hasOwnProperty("hidden"))
+                        canvasText.classList.remove("hidden");
+
+                    canvasText.style.position = "absolute";
+                    canvasText.style.display = "block";
+
+                    canvasText.insertAdjacentHTML('beforeend', '<h3>X won!</h3>');
+
+                    board = getInitialBoard("");
+                    boardAlt = [];
+                    for (let i = 0; i < 9; i++)
+                    {
+                        boardAlt.push("");
+                    }
+
+                    setTimeout(() =>{
+                        canvasText.classList.add("hidden");
+                        canvasText.style.position = "static";
+                        canvasText.style.display = "none";
+                        canvasText.innerHTML = "";
+                        counter = 0;
+                        clearPlayingArea(0, 0, contextGlobal, canvasSize, "#779c42");
+                        drawLines(lineWidth, lineColor, contextGlobal, canvasSize, sectionSize);
+                    }, 1500);
+                } else {
+                    tableCount++;
+                    document.getElementById("tablebody").insertAdjacentHTML('beforeend', '<tr><td>'+tableCount+'</td>' +
+                        '<td>0</td><td>1</td></tr>');
+
+                    if(canvasText.classList.hasOwnProperty("hidden"))
+                        canvasText.classList.remove("hidden");
+
+                    canvasText.style.position = "absolute";
+                    canvasText.style.display = "block";
+
+                    canvasText.insertAdjacentHTML('beforeend', '<h3>O won!</h3>');
+
+                    board = getInitialBoard("");
+                    boardAlt = [];
+                    for (let i = 0; i < 9; i++)
+                    {
+                        boardAlt.push("");
+                    }
+
+                    setTimeout(() =>{
+                        canvasText.classList.add("hidden");
+                        canvasText.style.position = "static";
+                        canvasText.style.display = "none";
+                        canvasText.innerHTML = "";
+                        counter = 0;
+                        clearPlayingArea(0, 0, contextGlobal, canvasSize, "#779c42");
+                        drawLines(lineWidth, lineColor, contextGlobal, canvasSize, sectionSize);
+                    }, 1500);
+                }
 
             }
 

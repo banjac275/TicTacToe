@@ -32,8 +32,8 @@
       <file leaf-file-name="home.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/home.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="441">
-              <caret line="21" column="45" lean-forward="false" selection-start-line="21" selection-start-column="45" selection-end-line="21" selection-end-column="45" />
+            <state relative-caret-position="462">
+              <caret line="22" column="12" lean-forward="true" selection-start-line="22" selection-start-column="12" selection-end-line="23" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -42,8 +42,8 @@
       <file leaf-file-name="home.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/home.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="745">
-              <caret line="141" column="20" lean-forward="false" selection-start-line="141" selection-start-column="20" selection-end-line="141" selection-end-column="20" />
+            <state relative-caret-position="472">
+              <caret line="137" column="20" lean-forward="false" selection-start-line="137" selection-start-column="20" selection-end-line="137" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -52,8 +52,8 @@
       <file leaf-file-name="home.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/home.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="335">
-              <caret line="608" column="32" lean-forward="false" selection-start-line="608" selection-start-column="32" selection-end-line="608" selection-end-column="32" />
+            <state relative-caret-position="499">
+              <caret line="84" column="27" lean-forward="true" selection-start-line="84" selection-start-column="27" selection-end-line="84" selection-end-column="53" />
               <folding />
             </state>
           </provider>
@@ -70,6 +70,11 @@
       </list>
     </option>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>markWin</find>
+    </findStrings>
+  </component>
   <component name="Git.Settings">
     <option name="ROOT_SYNC" value="DONT_SYNC" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -78,8 +83,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/index.php" />
-        <option value="$PROJECT_DIR$/home.html" />
         <option value="$PROJECT_DIR$/home.js" />
+        <option value="$PROJECT_DIR$/home.html" />
         <option value="$PROJECT_DIR$/home.css" />
       </list>
     </option>
@@ -247,7 +252,7 @@
       <workItem from="1523996883591" duration="3453000" />
       <workItem from="1524000651289" duration="1331000" />
       <workItem from="1524052500040" duration="12403000" />
-      <workItem from="1524143614644" duration="9901000" />
+      <workItem from="1524143614644" duration="17900000" />
     </task>
     <task id="LOCAL-00001" summary="neki poslovi">
       <created>1523908824019</created>
@@ -284,11 +289,18 @@
       <option name="project" value="LOCAL" />
       <updated>1524065949932</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="score board dodat, ima nekih bagova">
+      <created>1524154420178</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1524154420178</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="66026000" />
+    <option name="totallyTimeSpent" value="74025000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -334,7 +346,8 @@
     <MESSAGE value="vece izmene" />
     <MESSAGE value="radi lepo min max sto sam nasao, radi i igrac protic igraca, samo trebam back da podesim i da mi osvetli sve kad neko pobedi i da prikazuje rez i ostalo ali veci bitniji deo posla je zavrsen :3" />
     <MESSAGE value="manje izmene" />
-    <option name="LAST_COMMIT_MESSAGE" value="manje izmene" />
+    <MESSAGE value="score board dodat, ima nekih bagova" />
+    <option name="LAST_COMMIT_MESSAGE" value="score board dodat, ima nekih bagova" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -545,24 +558,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/home.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="335">
-          <caret line="608" column="32" lean-forward="false" selection-start-line="608" selection-start-column="32" selection-end-line="608" selection-end-column="32" />
+        <state relative-caret-position="499">
+          <caret line="84" column="27" lean-forward="true" selection-start-line="84" selection-start-column="27" selection-end-line="84" selection-end-column="53" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/home.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="745">
-          <caret line="141" column="20" lean-forward="false" selection-start-line="141" selection-start-column="20" selection-end-line="141" selection-end-column="20" />
+        <state relative-caret-position="472">
+          <caret line="137" column="20" lean-forward="false" selection-start-line="137" selection-start-column="20" selection-end-line="137" selection-end-column="20" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="441">
-          <caret line="21" column="45" lean-forward="false" selection-start-line="21" selection-start-column="45" selection-end-line="21" selection-end-column="45" />
+        <state relative-caret-position="462">
+          <caret line="22" column="12" lean-forward="true" selection-start-line="22" selection-start-column="12" selection-end-line="23" selection-end-column="18" />
           <folding />
         </state>
       </provider>
